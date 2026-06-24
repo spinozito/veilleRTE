@@ -8,13 +8,13 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#ffffff;--bg2:#f5f5f4;--bg3:#f0efe8;
+  --bg:#fff;--bg2:#f5f5f4;--bg3:#f0efe8;
   --t1:#1a1a18;--t2:#5f5e5a;--t3:#888780;
   --bd:rgba(0,0,0,0.12);--bd2:rgba(0,0,0,0.22);
   --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;--blue-d:#0C447C;
   --green-bg:#EAF3DE;--green-t:#3B6D11;
   --amber-bg:#FAEEDA;--amber-t:#854F0B;
-  --red:#A32D2D;
+  --red:#A32D2D;--red-bg:#FCEBEB;
   --r:8px;--rl:12px;
 }
 @media(prefers-color-scheme:dark){:root{
@@ -24,16 +24,18 @@
   --blue:#378ADD;--blue-l:#042C53;--blue-m:#185FA5;--blue-d:#85B7EB;
   --green-bg:#173404;--green-t:#C0DD97;
   --amber-bg:#412402;--amber-t:#FAC775;
+  --red-bg:#501313;
 }}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg3);color:var(--t1);min-height:100vh;font-size:15px;line-height:1.6}
 
-/* SETUP */
 #setup{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
-.card{background:var(--bg);border-radius:var(--rl);border:0.5px solid var(--bd);padding:2.5rem;max-width:440px;width:100%}
+.card{background:var(--bg);border-radius:var(--rl);border:0.5px solid var(--bd);padding:2.5rem;max-width:460px;width:100%}
 .s-logo{width:48px;height:48px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
 .s-logo i{font-size:22px;color:var(--blue-l)}
-.s-title{font-size:20px;font-weight:600;margin-bottom:6px}
+h2.s-title{font-size:20px;font-weight:600;margin-bottom:6px}
 .s-desc{font-size:14px;color:var(--t2);margin-bottom:1.5rem;line-height:1.6}
+.badge-info{display:flex;align-items:flex-start;gap:10px;background:var(--blue-l);border-radius:var(--r);padding:10px 14px;margin-bottom:1.25rem;font-size:13px;color:var(--blue-d)}
+.badge-info i{font-size:16px;flex-shrink:0;margin-top:1px}
 .lbl{font-size:13px;font-weight:500;color:var(--t2);display:block;margin-bottom:6px}
 .inp{width:100%;padding:10px 14px;border:0.5px solid var(--bd2);border-radius:var(--r);background:var(--bg);color:var(--t1);font-size:14px;font-family:monospace;margin-bottom:6px;outline:none;transition:border-color .15s}
 .inp:focus{border-color:var(--blue)}
@@ -41,27 +43,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .hint a{color:var(--blue)}
 .pbtn{width:100%;padding:11px 20px;background:var(--blue);color:var(--blue-l);border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
 .pbtn:hover{opacity:.88}
-.errmsg{font-size:13px;color:var(--red);margin-top:10px;display:none;padding:8px 12px;background:#FCEBEB;border-radius:var(--r)}
+.errmsg{font-size:13px;color:var(--red);margin-top:10px;display:none;padding:8px 12px;background:var(--red-bg);border-radius:var(--r)}
 
-/* APP */
 #app{display:none}
 .topbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:0.5px solid var(--bd);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between}
-.tb-left{display:flex;align-items:center;gap:12px}
+.tb-l{display:flex;align-items:center;gap:12px}
 .tb-logo{width:32px;height:32px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center}
 .tb-logo i{font-size:16px;color:var(--blue-l)}
 .tb-title{font-size:16px;font-weight:600}
 .tb-sub{font-size:12px;color:var(--t3)}
 .tb-time{font-size:12px;color:var(--t3)}
-
 .body{display:flex;height:calc(100vh - 56px)}
 
-/* SIDEBAR */
 .sidebar{width:260px;flex-shrink:0;background:var(--bg);border-right:0.5px solid var(--bd);display:flex;flex-direction:column;overflow:hidden}
 .sb-top{padding:1rem;border-bottom:0.5px solid var(--bd)}
 .gbtn{width:100%;padding:10px 14px;background:var(--blue);color:var(--blue-l);border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
 .gbtn:hover{opacity:.88}
 .gbtn:disabled{opacity:.4;cursor:not-allowed}
-.sb-label{padding:12px 1rem 4px;font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.07em}
+.sb-lbl{padding:12px 1rem 4px;font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.07em}
 .hist{overflow-y:auto;flex:1;padding:6px 8px 8px}
 .hist-empty{padding:1rem;text-align:center;font-size:13px;color:var(--t3)}
 .hi{padding:10px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:2px;border:0.5px solid transparent;transition:background .1s}
@@ -75,14 +74,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .reset-lnk{font-size:12px;color:var(--t3);cursor:pointer;display:flex;align-items:center;gap:6px}
 .reset-lnk:hover{color:var(--t2)}
 
-/* MAIN */
 .main{flex:1;overflow-y:auto;padding:1.5rem}
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;gap:12px}
 .w-icon{width:56px;height:56px;background:var(--bg2);border-radius:50%;display:flex;align-items:center;justify-content:center}
 .w-icon i{font-size:24px;color:var(--t3)}
 .w-title{font-size:16px;font-weight:500}
 .w-desc{font-size:14px;color:var(--t2);max-width:340px;line-height:1.6}
-
 .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:16px;text-align:center}
 .spinner{width:32px;height:32px;border:2px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -90,13 +87,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .ld-dots{display:flex;gap:6px;margin-top:4px}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--bd2);transition:background .3s}
 .dot.done{background:var(--blue)}
+.debugbox{margin:1rem auto;max-width:640px;background:var(--red-bg);border:1px solid #F7C1C1;border-radius:var(--r);padding:1rem;font-size:13px;color:var(--red);white-space:pre-wrap;word-break:break-all;display:none}
 
-/* DEBUG BOX */
-.debug-box{margin:1rem auto;max-width:640px;background:#FCEBEB;border:1px solid #F7C1C1;border-radius:var(--r);padding:1rem;font-size:13px;color:var(--red);white-space:pre-wrap;word-break:break-all;display:none}
-
-/* NEWSLETTER */
 .nw-wrap{max-width:720px;margin:0 auto}
-.nw-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.nw-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
 .nw-meta{font-size:13px;color:var(--t2)}
 .nw-meta strong{color:var(--t1)}
 .nw-actions{display:flex;gap:8px}
@@ -104,7 +98,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .abtn:hover{background:var(--bg2)}
 .abtn.danger:hover{border-color:var(--red);color:var(--red)}
 .toast{display:none;position:absolute;top:-34px;left:50%;transform:translateX(-50%);background:var(--t1);color:var(--bg);font-size:12px;padding:4px 10px;border-radius:var(--r);white-space:nowrap;pointer-events:none}
-
 .nw-card{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);overflow:hidden}
 .nw-hdr{background:var(--blue);padding:1.75rem 2rem}
 .nw-hdr-tag{font-size:11px;font-weight:600;color:var(--blue-m);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
@@ -116,9 +109,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .sec-ico{font-size:17px;color:var(--blue)}
 .sec-ttl{font-size:13px;font-weight:600;color:var(--t1);text-transform:uppercase;letter-spacing:.06em}
 .sec-body{font-size:14px;color:var(--t2);line-height:1.75}
-.sec-body p{margin-bottom:8px}
+.sec-body p{margin-bottom:10px}
 .sec-body p:last-child{margin-bottom:0}
 .nw-foot{padding:1rem 2rem;background:var(--bg2);font-size:12px;color:var(--t3);display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid var(--bd)}
+
+/* AO cards */
+.ao-card{border:0.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;transition:background .1s}
+.ao-card:hover{background:var(--bg2)}
+.ao-card:last-child{margin-bottom:0}
+.ao-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.ao-title{font-size:14px;font-weight:500;color:var(--t1);line-height:1.4;flex:1}
+.ao-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.ao-badge.cn{background:var(--blue-l);color:var(--blue-d)}
+.ao-badge.pin{background:var(--amber-bg);color:var(--amber-t)}
+.ao-badge.can{background:var(--green-bg);color:var(--green-t)}
+.ao-badge.rfi{background:#F3E8FB;color:#6B21A8}
+.ao-badge.other{background:var(--bg2);color:var(--t3)}
+.ao-meta{font-size:12px;color:var(--t3);display:flex;gap:14px;flex-wrap:wrap}
+.ao-meta span{display:flex;align-items:center;gap:4px}
+.ao-ref{font-size:12px;margin-top:4px}
+.ao-ref a{color:var(--blue);text-decoration:none}
+.ao-ref a:hover{text-decoration:underline}
+.ao-empty{font-size:13px;color:var(--t3);font-style:italic}
+.ao-source{font-size:12px;color:var(--t3);margin-top:10px}
+.ao-source a{color:var(--blue);text-decoration:none}
 
 @media(max-width:540px){
   .body{flex-direction:column;height:auto}
@@ -126,6 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   .main{padding:1rem}
   .nw-hdr{padding:1.25rem}
   .nw-sec{padding:1rem 1.25rem}
+  .tb-sub{display:none}
 }
 </style>
 </head>
@@ -134,8 +149,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 <div id="setup">
   <div class="card">
     <div class="s-logo"><i class="ti ti-bolt"></i></div>
-    <div class="s-title">RTE Weekly</div>
-    <div class="s-desc">Votre veille stratégique hebdomadaire sur RTE, générée par IA. Entrez votre clé API Anthropic pour commencer.</div>
+    <h2 class="s-title">RTE Weekly</h2>
+    <div class="s-desc">Veille stratégique hebdomadaire sur RTE — actualités, focus SI et appels d'offres JOUE en temps réel via recherche web IA.</div>
+    <div class="badge-info">
+      <i class="ti ti-info-circle"></i>
+      <span>La section AO utilise la <strong>recherche web IA</strong> pour trouver les vrais marchés RTE publiés sur TED/JOUE en temps réel.</span>
+    </div>
     <label class="lbl" for="apikey">Clé API Anthropic</label>
     <input type="password" id="apikey" class="inp" placeholder="sk-ant-api03-...">
     <div class="hint">Disponible sur <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a> — stockée uniquement dans votre navigateur.</div>
@@ -146,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 
 <div id="app">
   <div class="topbar">
-    <div class="tb-left">
+    <div class="tb-l">
       <div class="tb-logo"><i class="ti ti-bolt"></i></div>
       <div>
         <div class="tb-title">RTE Weekly</div>
@@ -163,7 +182,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
           <i class="ti ti-refresh"></i> Nouvelle édition
         </button>
       </div>
-      <div class="sb-label">Historique</div>
+      <div class="sb-lbl">Historique</div>
       <div class="hist" id="hist"><div class="hist-empty">Aucune édition</div></div>
       <div class="sb-foot">
         <div class="reset-lnk" onclick="resetKey()"><i class="ti ti-key"></i> Changer de clé API</div>
@@ -174,20 +193,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
       <div class="welcome" id="welcome">
         <div class="w-icon"><i class="ti ti-newspaper"></i></div>
         <div class="w-title">Prêt à générer votre veille</div>
-        <div class="w-desc">Cliquez sur "Nouvelle édition" pour générer la newsletter RTE de la semaine.</div>
+        <div class="w-desc">Cliquez sur "Nouvelle édition" pour générer la newsletter avec actualités RTE, focus SI et appels d'offres JOUE en temps réel.</div>
       </div>
-
       <div class="loading" id="loading" style="display:none">
         <div class="spinner"></div>
         <div class="ld-step" id="ldstep">Initialisation...</div>
         <div class="ld-dots">
           <div class="dot" id="d0"></div><div class="dot" id="d1"></div>
           <div class="dot" id="d2"></div><div class="dot" id="d3"></div>
+          <div class="dot" id="d4"></div>
         </div>
       </div>
-
-      <div class="debug-box" id="debugbox"></div>
-
+      <div class="debugbox" id="debugbox"></div>
       <div id="nwview" style="display:none">
         <div class="nw-wrap">
           <div class="nw-toolbar">
@@ -209,7 +226,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
             </div>
             <div id="nwbody"></div>
             <div class="nw-foot">
-              <span>Généré par IA · Sources : rte-france.com, TED/JOUE</span>
+              <span>IA + recherche web temps réel · rte-france.com · TED/JOUE</span>
               <span id="nwnum"></span>
             </div>
           </div>
@@ -227,254 +244,285 @@ var editions = [];
 var curIdx = -1;
 
 var STEPS = [
+  'Recherche des AO RTE sur TED/JOUE...',
   'Analyse des actualités RTE...',
-  'Veille appels d\'offres JOUE/TED...',
   'Synthèse signaux SI et numérique...',
-  'Rédaction de la newsletter...'
+  'Rédaction de la newsletter...',
+  'Assemblage final...'
 ];
 
-// ── BOOT ──
 window.onload = function() {
   var saved = localStorage.getItem(KEY_STORE);
   if (saved) { apiKey = saved; launch(); }
-  tick();
-  setInterval(tick, 30000);
+  tick(); setInterval(tick, 30000);
 };
 
 function tick() {
   var el = document.getElementById('clock');
-  if (el) el.textContent = new Date().toLocaleString('fr-FR', {weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  if (el) el.textContent = new Date().toLocaleString('fr-FR',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 }
 
 function startApp() {
   var v = document.getElementById('apikey').value.trim();
-  if (!v.startsWith('sk-ant-')) {
-    document.getElementById('serr').style.display = 'block';
-    return;
-  }
-  apiKey = v;
-  localStorage.setItem(KEY_STORE, apiKey);
-  launch();
+  if (!v.startsWith('sk-ant-')) { document.getElementById('serr').style.display='block'; return; }
+  apiKey = v; localStorage.setItem(KEY_STORE, apiKey); launch();
 }
 
 function launch() {
-  document.getElementById('setup').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  try { editions = JSON.parse(localStorage.getItem(ED_STORE) || '[]'); } catch(e) { editions = []; }
+  document.getElementById('setup').style.display='none';
+  document.getElementById('app').style.display='block';
+  try { editions = JSON.parse(localStorage.getItem(ED_STORE)||'[]'); } catch(e) { editions=[]; }
   renderHist();
-  if (editions.length > 0) showEd(0);
+  if (editions.length>0) showEd(0);
 }
 
 function resetKey() {
-  localStorage.removeItem(KEY_STORE);
-  apiKey = '';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('setup').style.display = 'flex';
-  document.getElementById('apikey').value = '';
-  document.getElementById('serr').style.display = 'none';
+  localStorage.removeItem(KEY_STORE); apiKey='';
+  document.getElementById('app').style.display='none';
+  document.getElementById('setup').style.display='flex';
+  document.getElementById('apikey').value='';
+  document.getElementById('serr').style.display='none';
 }
 
-// ── HISTORY ──
 function renderHist() {
   var el = document.getElementById('hist');
-  if (!editions.length) { el.innerHTML = '<div class="hist-empty">Aucune édition</div>'; return; }
-  el.innerHTML = editions.map(function(ed, i) {
-    return '<div class="hi' + (i === curIdx ? ' active' : '') + '" onclick="showEd(' + i + ')">' +
-      '<div class="hi-date">' + sDate(ed.date) + '</div>' +
-      '<div class="hi-prev">' + esc(ed.preview) + '</div>' +
-      '</div>';
+  if (!editions.length) { el.innerHTML='<div class="hist-empty">Aucune édition</div>'; return; }
+  el.innerHTML = editions.map(function(ed,i){
+    return '<div class="hi'+(i===curIdx?' active':'')+'" onclick="showEd('+i+')">'
+      +'<div class="hi-date">'+sDate(ed.date)+'</div>'
+      +'<div class="hi-prev">'+esc(ed.preview)+'</div></div>';
   }).join('');
 }
 
 function showEd(idx) {
-  curIdx = idx;
-  var ed = editions[idx];
-  hide('welcome'); hide('loading'); hide('debugbox');
-  show('nwview');
-  document.getElementById('nwdate').textContent = lDate(ed.date);
-  document.getElementById('nwsub').textContent = 'Semaine du ' + lDate(ed.date) + ' · Édition #' + (editions.length - idx);
-  document.getElementById('nwbody').innerHTML = ed.html;
-  document.getElementById('nwnum').textContent = '#' + (editions.length - idx) + ' / ' + editions.length;
+  curIdx=idx; var ed=editions[idx];
+  hide('welcome'); hide('loading'); hide('debugbox'); show('nwview');
+  document.getElementById('nwdate').textContent=lDate(ed.date);
+  document.getElementById('nwsub').textContent='Semaine du '+lDate(ed.date)+' · Édition #'+(editions.length-idx);
+  document.getElementById('nwbody').innerHTML=ed.html;
+  document.getElementById('nwnum').textContent='#'+(editions.length-idx)+' / '+editions.length;
   renderHist();
 }
 
 function delEdition() {
   if (!confirm('Supprimer cette édition ?')) return;
-  editions.splice(curIdx, 1);
-  localStorage.setItem(ED_STORE, JSON.stringify(editions));
-  curIdx = -1;
-  renderHist();
-  if (editions.length > 0) showEd(0);
+  editions.splice(curIdx,1);
+  localStorage.setItem(ED_STORE,JSON.stringify(editions));
+  curIdx=-1; renderHist();
+  if (editions.length>0) showEd(0);
   else { hide('nwview'); show('welcome'); }
+}
+
+// ── Appel API avec web_search tool ──
+async function callWithSearch(userPrompt) {
+  var messages = [{ role:'user', content: userPrompt }];
+  var tools = [{ type:'web_search_20250305', name:'web_search' }];
+
+  // Agentic loop: on continue tant que le modèle utilise des outils
+  for (var turn=0; turn<6; turn++) {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:6000,
+        tools: tools,
+        messages: messages
+      })
+    });
+
+    if (!res.ok) {
+      var errData={}; try { errData=await res.json(); } catch(e) {}
+      throw new Error('HTTP '+res.status+' — '+(errData.error ? errData.error.message : JSON.stringify(errData)));
+    }
+
+    var data = await res.json();
+
+    // Ajouter la réponse du modèle à l'historique
+    messages.push({ role:'assistant', content: data.content });
+
+    // Si le modèle a fini (stop_reason != tool_use), extraire le texte final
+    if (data.stop_reason !== 'tool_use') {
+      var text = '';
+      for (var i=0; i<data.content.length; i++) {
+        if (data.content[i].type === 'text') text += data.content[i].text;
+      }
+      return text;
+    }
+
+    // Sinon, collecter les résultats des outils et renvoyer
+    var toolResults = [];
+    for (var i=0; i<data.content.length; i++) {
+      var block = data.content[i];
+      if (block.type === 'tool_use' && block.name === 'web_search') {
+        // Le résultat web_search est fourni automatiquement par l'API Anthropic
+        // On doit renvoyer un tool_result vide pour continuer la boucle
+        toolResults.push({
+          type:'tool_result',
+          tool_use_id: block.id,
+          content: 'Recherche effectuée.'
+        });
+      }
+    }
+    if (toolResults.length>0) {
+      messages.push({ role:'user', content: toolResults });
+    }
+  }
+  throw new Error('Boucle agentique non terminée après 6 tours.');
 }
 
 // ── GENERATE ──
 async function generate() {
   var btn = document.getElementById('gbtn');
-  btn.disabled = true;
-  hide('welcome'); hide('nwview'); hide('debugbox');
+  btn.disabled=true;
+  hide('welcome'); hide('nwview');
+  var db=document.getElementById('debugbox');
+  db.style.display='none'; db.textContent='';
   show('loading');
 
-  var dotStep = 0;
-  dot(0, true);
-  var iv = setInterval(function() {
+  var dotStep=0; dot(0,true);
+  document.getElementById('ldstep').textContent=STEPS[0];
+  var iv=setInterval(function(){
     dotStep++;
-    if (dotStep < 4) { dot(dotStep, true); document.getElementById('ldstep').textContent = STEPS[dotStep]; }
-  }, 3000);
+    if(dotStep<5){ dot(dotStep,true); document.getElementById('ldstep').textContent=STEPS[dotStep]; }
+  },3000);
 
-  var today = new Date().toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  var num = editions.length + 1;
+  var today=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var num=editions.length+1;
 
   var prompt = "Tu es un assistant de veille strategique pour un Account Manager ESN en charge du compte RTE.\n\n"
-    + "Genere une newsletter hebdomadaire sur RTE pour la semaine du " + today + " (edition " + num + ").\n\n"
-    + "Contexte RTE 2026 :\n"
-    + "- Plan investissement 4,24 Mds euros valide CRE\n"
-    + "- TURPE 7 en vigueur aout 2025\n"
-    + "- 18 GW reserves data centers (80 projets)\n"
-    + "- Canicule juin 2026 reseau stable\n"
-    + "- CA 2025 6658 M euros +20%, EBITDA 2371 M euros\n"
-    + "- Projets : Noroit IdF, EFGL Golfe du Lion, Fos-Berre-Provence 2030\n"
-    + "- PPE3 fev 2026 : objectif 618 TWh en 2035\n"
-    + "- SDDR 2040 : 100 Mds, interconnexions 660 M euros\n"
-    + "- Marches SI : CPV 72000000, directive 2014/25/UE, accords-cadres Axway Kafka WebMethods\n\n"
-    + "Pour la section SI, choisis un angle : OT/IT convergence, cybersecurite industrielle, API Management, SCADA/EMS, cloud hybride, IA predictive, digital twin.\n\n"
-    + "REGLE ABSOLUE : ta reponse doit etre uniquement un objet JSON valide. Aucun texte avant ou apres. Aucun backtick. Aucun markdown.\n\n"
+    + "Genere une newsletter hebdomadaire sur RTE pour la semaine du "+today+" (edition "+num+").\n\n"
+    + "ETAPE 1 — RECHERCHE WEB OBLIGATOIRE :\n"
+    + "Utilise l'outil web_search pour rechercher :\n"
+    + "1. Les appels d'offres RTE actuellement publies sur TED/JOUE (recherche : 'RTE reseau transport electricite appel offres JOUE TED 2026 marche public')\n"
+    + "2. Les actualites RTE recentes de juin 2026\n"
+    + "Cherche specifiquement le RFI MIMSI3 de RTE et tout autre AO SI recent.\n\n"
+    + "ETAPE 2 — JSON FINAL :\n"
+    + "Apres tes recherches, reponds UNIQUEMENT avec un objet JSON valide (aucun texte avant/apres, aucun backtick).\n\n"
+    + "Contexte RTE 2026 : plan 4,24 Mds euros CRE | TURPE 7 aout 2025 | 18 GW data centers | CA 2025 6658 M euros +20% | "
+    + "Projets Noroit, EFGL Golfe du Lion, Fos-Berre 2030 | PPE3 618 TWh en 2035 | SDDR 2040 100 Mds.\n\n"
     + "Structure JSON :\n"
-    + '{"preview":"8 mots max","plaintext":"texte brut email 500 mots",'
-    + '"sections":['
-    + '{"icon":"ti-bolt","title":"Actu de la semaine","content":"paragraphes de texte"},'
-    + '{"icon":"ti-chart-bar","title":"Chiffres cles","content":"paragraphes de texte"},'
-    + '{"icon":"ti-building-factory-2","title":"Projets et infrastructures","content":"paragraphes de texte"},'
-    + '{"icon":"ti-cpu","title":"Focus SI","content":"paragraphes de texte"},'
-    + '{"icon":"ti-file-text","title":"Marches et appels offres","content":"paragraphes de texte"},'
-    + '{"icon":"ti-telescope","title":"A l horizon","content":"paragraphes de texte"}'
+    + '{"preview":"8 mots max","sections":['
+    + '{"icon":"ti-bolt","title":"Actu de la semaine","content":"texte"},'
+    + '{"icon":"ti-chart-bar","title":"Chiffres cles","content":"texte"},'
+    + '{"icon":"ti-building-factory-2","title":"Projets et infrastructures","content":"texte"},'
+    + '{"icon":"ti-cpu","title":"Focus SI","content":"texte"},'
+    + '{"icon":"ti-file-text","title":"Marches et appels offres JOUE","content":"Liste detaillee des AOs trouves : reference TED, intitule, type, date publication, date limite, lien TED. Si MIMSI3 trouve, le mentionner en premier."},'
+    + '{"icon":"ti-telescope","title":"A l horizon","content":"texte"}'
     + ']}';
 
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 4000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
+    var raw = await callWithSearch(prompt);
 
     clearInterval(iv);
-    for (var i = 0; i < 4; i++) dot(i, true);
+    for (var i=0;i<5;i++) dot(i,true);
 
-    if (!res.ok) {
-      var errData = {};
-      try { errData = await res.json(); } catch(e) {}
-      throw new Error('HTTP ' + res.status + ' — ' + (errData.error ? errData.error.message : JSON.stringify(errData)));
-    }
-
-    var data = await res.json();
-    var raw = '';
-    for (var i = 0; i < data.content.length; i++) raw += (data.content[i].text || '');
-
-    // Extract JSON robustly
-    var f = raw.indexOf('{');
-    var l = raw.lastIndexOf('}');
-    if (f === -1 || l === -1) throw new Error('Pas de JSON dans la reponse. Reponse brute : ' + raw.slice(0, 300));
-    raw = raw.slice(f, l + 1);
+    // Extraire le JSON
+    var f=raw.indexOf('{'), l=raw.lastIndexOf('}');
+    if (f===-1||l===-1) throw new Error('Pas de JSON dans la reponse.\n\nReponse :\n'+raw.slice(0,600));
+    raw=raw.slice(f,l+1);
 
     var parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch(je) {
-      // fix trailing commas
-      var fixed = raw.replace(/,(\s*[}\]])/g, '$1');
-      try { parsed = JSON.parse(fixed); }
-      catch(je2) { throw new Error('JSON invalide : ' + je.message + '\nExtrait : ' + raw.slice(0, 300)); }
+    try { parsed=JSON.parse(raw); }
+    catch(je) {
+      raw=raw.replace(/,(\s*[}\]])/g,'$1');
+      try { parsed=JSON.parse(raw); }
+      catch(je2) { throw new Error('JSON invalide : '+je.message+'\n\nExtrait :\n'+raw.slice(0,400)); }
     }
 
-    var html = '';
-    for (var i = 0; i < parsed.sections.length; i++) {
-      var s = parsed.sections[i];
-      var paras = (s.content || '').split(/\n+/).filter(function(p){ return p.trim(); });
-      var phtml = paras.map(function(p){ return '<p>' + esc(p.trim()) + '</p>'; }).join('');
-      html += '<div class="nw-sec">'
-        + '<div class="sec-hdr"><i class="ti ' + esc(s.icon) + ' sec-ico"></i>'
-        + '<div class="sec-ttl">' + esc(s.title) + '</div></div>'
-        + '<div class="sec-body">' + phtml + '</div>'
-        + '</div>';
+    // Construire le HTML
+    var html='';
+    for (var i=0;i<parsed.sections.length;i++) {
+      var s=parsed.sections[i];
+      var paras=(s.content||'').split(/\n+/).filter(function(p){return p.trim();})
+        .map(function(p){return '<p>'+esc(p.trim())+'</p>';}).join('');
+      html+='<div class="nw-sec"><div class="sec-hdr">'
+        +'<i class="ti '+esc(s.icon)+' sec-ico"></i>'
+        +'<div class="sec-ttl">'+esc(s.title)+'</div></div>'
+        +'<div class="sec-body">'+paras+'</div></div>';
     }
 
-    var ed = { date: new Date().toISOString(), preview: parsed.preview || '', plaintext: parsed.plaintext || '', html: html };
+    // Build plaintext from sections (no plaintext in JSON = no truncation risk)
+    var plaintext = '⚡ RTE Weekly — Semaine du '+new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n';
+    for (var j=0;j<parsed.sections.length;j++){
+      var sec=parsed.sections[j];
+      plaintext += '--- '+sec.title.toUpperCase()+' ---\n'+(sec.content||'')+'\n\n';
+    }
+    var ed={
+      date:new Date().toISOString(),
+      preview:parsed.preview||'',
+      plaintext:plaintext.trim(),
+      html:html
+    };
     editions.unshift(ed);
-    localStorage.setItem(ED_STORE, JSON.stringify(editions));
+    localStorage.setItem(ED_STORE,JSON.stringify(editions));
 
-    btn.disabled = false;
-    for (var i = 0; i < 4; i++) dot(i, false);
-    hide('loading');
-    showEd(0);
+    btn.disabled=false;
+    for (var i=0;i<5;i++) dot(i,false);
+    hide('loading'); showEd(0);
 
   } catch(err) {
-    clearInterval(iv);
-    btn.disabled = false;
-    for (var i = 0; i < 4; i++) dot(i, false);
-    hide('loading');
-    show('welcome');
-    var db = document.getElementById('debugbox');
-    db.textContent = 'ERREUR : ' + err.message;
-    db.style.display = 'block';
+    clearInterval(iv); btn.disabled=false;
+    for (var i=0;i<5;i++) dot(i,false);
+    hide('loading'); show('welcome');
+    db.textContent='ERREUR : '+err.message;
+    db.style.display='block';
   }
 }
 
-// ── COPY ──
 function copyText() {
-  var ed = editions[curIdx];
-  if (!ed) return;
-  var txt = '⚡ RTE Weekly — Semaine du ' + lDate(ed.date) + '\n\n' + ed.plaintext;
-  navigator.clipboard.writeText(txt).then(function() {
-    var t = document.getElementById('ctToast');
-    t.style.display = 'block';
-    setTimeout(function(){ t.style.display = 'none'; }, 2000);
+  var ed=editions[curIdx]; if (!ed) return;
+  var txt='⚡ RTE Weekly — Semaine du '+lDate(ed.date)+'\n\n'+ed.plaintext;
+  navigator.clipboard.writeText(txt).then(function(){
+    var t=document.getElementById('ctToast'); t.style.display='block';
+    setTimeout(function(){t.style.display='none';},2000);
   });
 }
 
-// ── EXPORT ──
 function exportHtml() {
-  var ed = editions[curIdx];
-  if (!ed) return;
-  var html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>RTE Weekly ' + sDate(ed.date) + '</title>'
-    + '<style>body{font-family:Arial,sans-serif;max-width:680px;margin:40px auto;color:#1a1a18}'
-    + '.h{background:#185FA5;padding:2rem;border-radius:8px 8px 0 0}'
-    + '.ht{font-size:24px;font-weight:700;color:#E6F1FB}.hs{font-size:13px;color:#85B7EB;margin-top:6px}'
-    + '.b{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 8px 8px}'
-    + '.s{padding:1.25rem 2rem;border-bottom:1px solid #e0e0e0}.s:last-child{border-bottom:none}'
-    + '.st{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#185FA5;margin-bottom:10px}'
-    + '.sc{font-size:14px;color:#5f5e5a;line-height:1.75}.sc p{margin-bottom:8px}'
-    + '.f{padding:1rem 2rem;background:#f5f5f4;font-size:12px;color:#888780}'
-    + '</style></head><body>'
-    + '<div class="h"><div style="font-size:11px;font-weight:700;color:#85B7EB;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">⚡ Veille stratégique</div>'
-    + '<div class="ht">RTE Weekly</div><div class="hs">Semaine du ' + lDate(ed.date) + '</div></div>'
-    + '<div class="b">' + ed.html.replace(/class="nw-sec"/g,'class="s"').replace(/class="sec-hdr"[^>]*>/g,'').replace(/<i[^>]*><\/i>/g,'').replace(/class="sec-ttl"/g,'class="st"').replace(/class="sec-body"/g,'class="sc"') + '</div>'
-    + '<div class="f">Généré par IA · Sources : rte-france.com, TED/JOUE</div>'
-    + '</body></html>';
-  var blob = new Blob([html], {type:'text/html'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url; a.download = 'rte-weekly-' + ed.date.slice(0,10) + '.html';
-  a.click(); URL.revokeObjectURL(url);
+  var ed=editions[curIdx]; if (!ed) return;
+  var h='<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>RTE Weekly '+sDate(ed.date)+'</title>'
+    +'<style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;color:#1a1a18}'
+    +'.hdr{background:#185FA5;padding:2rem;border-radius:8px 8px 0 0}'
+    +'.hdr h1{font-size:24px;color:#E6F1FB;margin:0}.hdr p{font-size:13px;color:#85B7EB;margin:6px 0 0}'
+    +'.bdy{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 8px 8px}'
+    +'.sec{padding:1.25rem 2rem;border-bottom:1px solid #e0e0e0}.sec:last-child{border-bottom:none}'
+    +'.sec-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#185FA5;margin-bottom:10px}'
+    +'.sec-b{font-size:14px;color:#5f5e5a;line-height:1.75}.sec-b p{margin-bottom:8px}'
+    +'.ft{padding:1rem 2rem;background:#f5f5f4;font-size:12px;color:#888}'
+    +'</style></head><body>'
+    +'<div class="hdr"><p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#85B7EB;margin-bottom:8px">⚡ VEILLE STRATÉGIQUE</p>'
+    +'<h1>RTE Weekly</h1><p>Semaine du '+lDate(ed.date)+'</p></div>'
+    +'<div class="bdy">'+ed.html
+      .replace(/class="nw-sec"/g,'class="sec"')
+      .replace(/<div class="sec-hdr">[\s\S]*?<\/div>\s*<\/div>/g, function(m){
+        var t=m.match(/class="sec-ttl">(.*?)<\/div>/);
+        return t ? '<div class="sec-t">'+t[1]+'</div>' : '';
+      })
+      .replace(/class="sec-body"/g,'class="sec-b"')
+    +'</div>'
+    +'<div class="ft">Généré par IA + recherche web temps réel · TED/JOUE · rte-france.com</div>'
+    +'</body></html>';
+  var blob=new Blob([h],{type:'text/html'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='rte-weekly-'+ed.date.slice(0,10)+'.html'; a.click();
+  URL.revokeObjectURL(url);
 }
 
-// ── UTILS ──
-function show(id){ document.getElementById(id).style.display = ''; }
-function hide(id){ document.getElementById(id).style.display = 'none'; }
-function dot(i, on){ document.getElementById('d'+i).classList[on?'add':'remove']('done'); }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function lDate(iso){ return new Date(iso).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
-function sDate(iso){ return new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'}); }
+function show(id){document.getElementById(id).style.display='';}
+function hide(id){document.getElementById(id).style.display='none';}
+function dot(i,on){document.getElementById('d'+i).classList[on?'add':'remove']('done');}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function lDate(iso){return new Date(iso).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function sDate(iso){return new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});}
 
-document.getElementById('apikey').addEventListener('keydown', function(e){ if(e.key==='Enter') startApp(); });
+document.getElementById('apikey').addEventListener('keydown',function(e){if(e.key==='Enter')startApp();});
 </script>
 </body>
 </html>
