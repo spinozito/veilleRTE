@@ -487,6 +487,16 @@ body {
   .tb-sub,.tb-divider{display:none}
 }
 
+
+/* AO Sources */
+.ao-sources{padding:12px 14px;border-top:1px solid #DBEAFE;background:#F0F7FF}
+.ao-sources-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#64748B;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ao-sources-title i{font-size:12px}
+.ao-source-item{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 10px;border-radius:7px;text-decoration:none;transition:background .12s;margin-bottom:2px;border:1px solid transparent}
+.ao-source-item:hover{background:#fff;border-color:#BFDBFE}
+.ao-source-name{font-size:12px;font-weight:600;color:#1E40AF}
+.ao-source-note{font-size:11px;color:#94A3B8;text-align:right;flex-shrink:0}
+
 /* ── AO ENCART ── */
 .ao-encart{margin:0 2.25rem 0;border:1.5px solid #DBEAFE;border-radius:14px;overflow:hidden;background:#F8FBFF}
 .ao-encart-hdr{background:linear-gradient(90deg,#1E3A5F 0%,#1D4ED8 100%);padding:12px 18px;display:flex;align-items:center;gap:10px}
@@ -936,6 +946,21 @@ function buildAOEncart(aoList){
       +'<span class="ao-encart-hdr-title">Marchés & Appels d\'offres — JOUE</span></div>'
       +'<div class="ao-empty">Aucun appel d\'offres RTE trouvé cette semaine sur TED/JOUE.</div></div>';
   }
+  var SOURCES = [
+    {label:'BuyRTE (nouvelle plateforme RTE)', url:'https://www.rte-france.com/fournisseurs/outils-et-portails', note:'Remplace BravoSolution depuis mai-juin 2026'},
+    {label:'TED/JOUE — Avis RTE', url:'https://ted.europa.eu/en/search/result?query=RTE+r%C3%A9seau+transport+%C3%A9lectricit%C3%A9&buyer-country=FRA&search-scope=ACTIVE', note:'Journal officiel UE, directive 2014/25/UE'},
+    {label:'BOAMP — Marchés RTE', url:'https://www.boamp.fr/avis/recherche?query=RTE+r%C3%A9seau+de+transport+d+%C3%A9lectricit%C3%A9&typeavis=&departement=', note:'Bulletin officiel des annonces de marchés publics'},
+    {label:'Espace Fournisseurs RTE', url:'https://www.rte-france.com/fournisseurs', note:'Politique achats, données essentielles, contacts'},
+    {label:'Marchés Online — RTE', url:'https://www.marchesonline.com/appels-offres/acheteurs/rte-reseau-de-transport-d-electricite-siege-C513346', note:'Agrégateur AO toutes sources'},
+    {label:'La Centrale des Marchés — RTE', url:'https://lacentraledesmarches.com/marches-publics/?keyword=RTE+r%C3%A9seau+transport', note:'Veille marchés publics et privés'}
+  ];
+  var sourcesHtml = '<div class="ao-sources-title"><i class="ti ti-link"></i> Sources de veille</div>'
+    + SOURCES.map(function(s){
+        return '<a class="ao-source-item" href="'+esc(s.url)+'" target="_blank" rel="noopener">'
+          +'<div class="ao-source-name">'+esc(s.label)+'</div>'
+          +'<div class="ao-source-note">'+esc(s.note)+'</div>'
+          +'</a>';
+      }).join('');
   var cards=aoList.map(function(ao){
     var bc=badgeCls(ao.type);
     var lnk=ao.url&&ao.url.startsWith('http')
